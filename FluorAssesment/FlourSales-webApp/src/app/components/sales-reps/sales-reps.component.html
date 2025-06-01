@@ -1,0 +1,79 @@
+<h2>Sales Representatives</h2>
+
+
+
+<form (ngSubmit)="addRep()" #repForm="ngForm" class="add-rep-form">
+  <input type="text" placeholder="Name" [(ngModel)]="newRep.name" name="name" required />
+  <input type="email" placeholder="Email" [(ngModel)]="newRep.email" name="email" required />
+  <input type="text" placeholder="Platform" [(ngModel)]="newRep.platform" name="platform" required />
+  <input type="text" placeholder="Region" [(ngModel)]="newRep.region" name="region" required />
+  <label>
+    <input type="checkbox" [(ngModel)]="newRep.isActive" name="isActive" />
+    Active
+  </label>
+  <button type="submit" [disabled]="repForm.invalid">Add</button>
+</form>
+
+<!-- Filtering Controls -->
+<div class="filters">
+  <label>
+    Platform:
+    <select [(ngModel)]="selectedPlatform" (ngModelChange)="applyFilters()">
+      <option value="">All</option>
+      <option *ngFor="let platform of platforms" [value]="platform">{{ platform }}</option>
+    </select>
+  </label>
+  <label>
+    Region:
+    <select [(ngModel)]="selectedRegion" (ngModelChange)="applyFilters()">
+      <option value="">All</option>
+      <option *ngFor="let region of regions" [value]="region">{{ region }}</option>
+    </select>
+  </label>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Platform</th>
+      <th>Region</th>
+      <th>Active</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let rep of filteredReps; let i = index">
+      <ng-container *ngIf="editingIndex === i; else viewRow">
+        <!-- Edit row -->
+        <td><input [(ngModel)]="editRep.name" /></td>
+        <td><input [(ngModel)]="editRep.email" /></td>
+        <td><input [(ngModel)]="editRep.platform" /></td>
+        <td><input [(ngModel)]="editRep.region" /></td>
+        <td>
+          <input type="checkbox" [(ngModel)]="editRep.isActive" />
+        </td>
+        <td>
+          <div class="actions">
+            <button (click)="saveEdit()">Save</button>
+            <button (click)="cancelEdit()">Cancel</button>
+          </div>
+        </td>
+      </ng-container>
+      <ng-template #viewRow>
+        <td>{{ rep.name }}</td>
+        <td>{{ rep.email }}</td>
+        <td>{{ rep.platform }}</td>
+        <td>{{ rep.region }}</td>
+        <td>{{ rep.isActive ? 'Yes' : 'No' }}</td>
+        <td>
+          <div class="actions">
+            <button (click)="startEdit(i)">Edit</button>
+            <button (click)="deleteRep(i)">Delete</button>
+          </div>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>
