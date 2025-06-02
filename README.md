@@ -96,6 +96,12 @@ GO
 ALTER TABLE [dbo].[SalesRepresentatives] ADD  DEFAULT ((1)) FOR [IsActive];
 GO
 
+-- Add non-clustered indexes for efficient querying
+CREATE NONCLUSTERED INDEX IX_SalesRepresentatives_Platform ON dbo.SalesRepresentatives(Platform);
+CREATE NONCLUSTERED INDEX IX_SalesRepresentatives_Region ON dbo.SalesRepresentatives(Region);
+CREATE NONCLUSTERED INDEX IX_SalesRepresentatives_IsActive ON dbo.SalesRepresentatives(IsActive);
+GO
+
 -- Insert the data
 SET IDENTITY_INSERT SalesRepresentatives ON;
 
@@ -108,4 +114,3 @@ INSERT INTO SalesRepresentatives (Id, Name, Email, Platform, Region, IsActive) V
 
 SET IDENTITY_INSERT SalesRepresentatives OFF;
 GO
---------------------------------------------------------------------------------------------------
