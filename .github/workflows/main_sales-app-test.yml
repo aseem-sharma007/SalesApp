@@ -24,10 +24,11 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build FluorSalesApp.sln --configuration Release
         working-directory: ./SalesApp/FluorAssesment/FlourSales-API/FluorSalesApp/FluorSalesApp.sln
+        
       - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        run: dotnet publish FluorSalesApp.sln -c Release -o "${{env.DOTNET_ROOT}}/myapp"
         working-directory: SalesApp/FluorAssesment/FlourSales-API/FluorSalesApp/FluorSalesApp.sln
 
       - name: Upload artifact for deployment job
@@ -65,5 +66,6 @@ jobs:
           package: .
 
           
+
 
 
