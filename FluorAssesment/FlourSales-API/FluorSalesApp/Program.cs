@@ -40,6 +40,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+//enable Swagger in Production too 
+ app.UseSwagger();
+ app.UseSwaggerUI();
 
 app.UseCors("AllowFrontend");
 
